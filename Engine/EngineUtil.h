@@ -2,10 +2,14 @@
 
 #include "pch.h"
 
-#ifdef ENGINE_LIB
-	#define ENGINE_API __declspec(dllexport)
+#ifdef ENGINE_WINDOWS
+	#ifdef ENGINE_LIB
+		#define ENGINE_API __declspec(dllexport)
+	#else
+		#define ENGINE_API __declspec(dllimport)
+	#endif
 #else
-	#define ENGINE_API __declspec(dllimport)
+	#define ENGINE_API
 #endif
 
 #ifdef ENGINE_DEBUG
