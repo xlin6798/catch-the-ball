@@ -32,7 +32,6 @@ namespace Engine
 	bool GameWindow::CreateWindow(int width, int height, const std::string& windowName)
 	{
 		return mWindow->CreateWindow(800, 600, "Spring 22 Game Engine");
-
 	}
 
 	void GameWindow::SwapBuffers()
