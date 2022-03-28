@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "EngineApp.h" 
+#include "GameWindow.h"
 #include "GLFW/glfw3.h"
 
 namespace Engine
@@ -9,22 +10,15 @@ namespace Engine
 
 		ENGINE_LOG("Engine running…\n");
 
-		if (!glfwInit())
-		{
-			ENGINE_LOG("GLFW failed to initialize");
-		}
+		Engine::GameWindow::Init();
 
-		GLFWwindow* window;
-
-		window = glfwCreateWindow(800, 600, "game window", NULL, NULL);
+		Engine::GameWindow::GetWindow()->CreateWindow(800, 600, "game window");
 
 		while (true)
 		{
 			OnUpdate();
-
-			
-			glfwSwapBuffers(window);
-			glfwPollEvents();
+			Engine::GameWindow::GetWindow()->SwapBuffers();
+			Engine::GameWindow::GetWindow()->CollectEvents();
 		}
 
 	}
