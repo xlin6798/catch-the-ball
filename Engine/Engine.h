@@ -1,11 +1,11 @@
-$pragma once
+#pragma once
 
-#include “EngineApp.h”
+#include "EngineApp.h"
 
 #define ENGINE_APPLICATION_START(classname) \
 \
 int main()\
-(\
-	classname *game;\
+{\
+	classname game;\
 	game.Run();\
-)
+}

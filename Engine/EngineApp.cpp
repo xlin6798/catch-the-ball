@@ -1,15 +1,15 @@
 #include "pch.h"
 #include "EngineApp.h" 
-#include "../glfw/include/GLFW/glfw3.h"
+#include "GLFW/glfw3.h"
 
 namespace Engine
 {
 	void EngineApp::Run()
 	{
 
-		ENGINE_LOG("Engine running…\n";
+		ENGINE_LOG("Engine running…\n");
 
-		If(!glfwInit())
+		if (!glfwInit())
 		{
 			ENGINE_LOG("GLFW failed to initialize");
 		}
@@ -22,11 +22,14 @@ namespace Engine
 		{
 			OnUpdate();
 
+			
 			glfwSwapBuffers(window);
 			glfwPollEvents();
 		}
-		{
-			void EngineApp::OnUpdate()
-			{
-			}
-		}
+
+	}
+	void EngineApp::OnUpdate()
+	{
+	}
+
+}

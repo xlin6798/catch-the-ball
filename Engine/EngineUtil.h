@@ -11,5 +11,5 @@
 #ifdef ENGINE_DEBUG
 	#define ENGINE_LOG(x) std::cout<<x<<std::endl;
 #else
-	#define ENGINE_LOG(x) 
+	#define ENGINE_LOG(x)
 #endif

@@ -2,9 +2,9 @@
 
 #include "EngineUtil.h"
 
-namespace EngineApp
+namespace Engine
 {
-	class EngineApp
+	class ENGINE_API EngineApp
 	{
 	public:
 		void Run();
