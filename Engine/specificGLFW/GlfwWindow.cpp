@@ -20,7 +20,10 @@ namespace Engine
 			return false;
 		}
 
-		glfwMakeContextCurrent(mGlfwWindow);
+		glfwMakeContextCurrent( mGlfwWindow );
+
+		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+			ENGINE_LOG("ERROR: GLAD failed to initialize!");
 
 		return true;
 	}
