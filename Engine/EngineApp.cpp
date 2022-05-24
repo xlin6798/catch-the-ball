@@ -3,7 +3,6 @@
 #include "EngineApp.h" 
 #include "GameWindow.h"
 
-#include "glad/glad.h"
 #include "Sprite.h"
 #include "Shader.h"
 #include "Renderer.h"
@@ -23,19 +22,26 @@ namespace Engine
 
 		Sprite star{"../Engine/Assets/Images/Star.png"};
 
+		int xPos{ -star.GetWidth() };
+
+		mNextFrameTime = std::chrono::steady_clock::now() + mFrameDuration;
+
 		while (true)
 		{
 			OnUpdate();
 
-			// 04/01 video
+			Renderer::ClearScreen();
 
-			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT);
+			Renderer::Draw(star, xPos, 20, 1);
 
-			Renderer::Draw(star, 50, 20, 1);
+			xPos = (xPos + 5);
 
-			Engine::GameWindow::GetWindow()->SwapBuffers();
-			Engine::GameWindow::GetWindow()->CollectEvents();
+			std::this_thread::sleep_until(mNextFrameTime);
+
+			GameWindow::GetWindow()->SwapBuffers();
+			GameWindow::GetWindow()->CollectEvents();
+
+			mNextFrameTime += mFrameDuration;
 		}
 
 	}
