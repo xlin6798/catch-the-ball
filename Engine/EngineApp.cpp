@@ -6,35 +6,31 @@
 #include "Sprite.h"
 #include "Shader.h"
 #include "Renderer.h"
+#include "Events.h"
+#include "KeyCodes.h"
 
 namespace Engine
 {
-	void EngineApp::Run()
+	EngineApp::EngineApp()
 	{
-
 		ENGINE_LOG("Engine running");
 
 		GameWindow::Init();
 
-		GameWindow::GetWindow()->CreateWindow(800, 600, "game window");
+		GameWindow::GetWindow()->CreateWindow(1000, 800, "game window");
 
 		Renderer::Init();
+	}
 
-		Sprite star{"../Engine/Assets/Images/Star.png"};
-
-		int xPos{ -star.GetWidth() };
-
+	void EngineApp::Run()
+	{
 		mNextFrameTime = std::chrono::steady_clock::now() + mFrameDuration;
 
 		while (true)
 		{
-			OnUpdate();
-
 			Renderer::ClearScreen();
 
-			Renderer::Draw(star, xPos, 20, 1);
-
-			xPos = (xPos + 5);
+			OnUpdate();
 
 			std::this_thread::sleep_until(mNextFrameTime);
 
@@ -47,6 +43,16 @@ namespace Engine
 	}
 	void EngineApp::OnUpdate()
 	{
+	}
+
+	void EngineApp::SetKeyPressedCallback(const std::function<void(const KeyPressedEvent&)> &keyPressedCallback)
+	{
+		GameWindow::GetWindow()->SetKeyPressedCallback(keyPressedCallback);
+	}
+
+	void EngineApp::SetKeyReleasedCallback(const std::function<void(const KeyReleasedEvent&)>& keyReleasedCallback)
+	{
+		GameWindow::GetWindow()->SetKeyReleasedCallback(keyReleasedCallback);
 	}
 
 }

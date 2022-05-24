@@ -31,7 +31,7 @@ namespace Engine
 
 	bool GameWindow::CreateWindow(int width, int height, const std::string& windowName)
 	{
-		return mWindow->CreateWindow(800, 600, "Spring 22 Game Engine");
+		return mWindow->CreateWindow(width, height, windowName);
 	}
 
 	void GameWindow::SwapBuffers()
@@ -52,6 +52,17 @@ namespace Engine
 	int GameWindow::GetHeight() const
 	{
 		return mWindow->GetHeight();
+	}
+
+	void GameWindow::SetKeyPressedCallback(const std::function<void(const KeyPressedEvent&)>& keyPressedCallback)
+	{
+		mWindow->SetKeyPressedCallback(keyPressedCallback);
+	}
+
+	void GameWindow::SetKeyReleasedCallback(const std::function<void(const KeyReleasedEvent&)>& keyReleasedCallback)
+	{
+		mWindow->SetKeyReleasedCallback(keyReleasedCallback);
+
 	}
 
 }

@@ -1,8 +1,5 @@
 #include "Engine.h"
 
-class GameApp : public Engine::EngineApp
-{
-
-};
+#include "GameApp.h"
 
 ENGINE_APPLICATION_START(GameApp);

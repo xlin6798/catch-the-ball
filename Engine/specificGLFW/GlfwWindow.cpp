@@ -1,4 +1,6 @@
 #include "pch.h"
+
+#include "glad/glad.h"
 #include "GlfwWindow.h"
 #include "EngineUtil.h"
 
@@ -21,9 +23,31 @@ namespace Engine
 		}
 
 		glfwMakeContextCurrent( mGlfwWindow );
+		glfwSwapInterval(1);
 
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 			ENGINE_LOG("ERROR: GLAD failed to initialize!");
+
+		glfwSetWindowUserPointer(mGlfwWindow, &mCallbacks);
+
+		glfwSetKeyCallback(mGlfwWindow, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+			{
+				if (action == GLFW_PRESS || action == GLFW_REPEAT)
+				{
+					Callbacks* userPointer{ (Callbacks*)glfwGetWindowUserPointer(window) };
+
+					KeyPressedEvent event{ key };
+					userPointer->keyPressedCallback(event);
+				}
+				else if (action == GLFW_RELEASE)
+				{
+					Callbacks* userPointer{ (Callbacks*)glfwGetWindowUserPointer(window) };
+
+					KeyReleasedEvent event{ key };
+					userPointer->keyReleasedCallback(event);
+				}
+			}
+		);
 
 		return true;
 	}
@@ -58,5 +82,15 @@ namespace Engine
 			glfwDestroyWindow(mGlfwWindow);
 
 		glfwTerminate();
+	}
+	
+	void GlfwWindow::SetKeyPressedCallback(const std::function<void(const KeyPressedEvent&)>& keyPressedCallback)
+	{
+		mCallbacks.keyPressedCallback = keyPressedCallback;
+	}
+	
+	void GlfwWindow::SetKeyReleasedCallback(const std::function<void(const KeyReleasedEvent&)>& keyReleasedCallback)
+	{
+		mCallbacks.keyReleasedCallback = keyReleasedCallback;
 	}
 }

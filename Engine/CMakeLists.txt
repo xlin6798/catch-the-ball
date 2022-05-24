@@ -14,6 +14,8 @@ set(HEADER_FILES
 	specificOpenGL/OpenGLSprite.h
 	specificOpenGL/OpenGLShader.h
 	specificOpenGL/OpenGLRenderer.h
+	Events.h
+	Keycodes.h
 	)
 
 set(SOURCE_FILES 
@@ -23,6 +25,7 @@ set(SOURCE_FILES
 	Sprite.cpp
 	Shader.cpp
 	Renderer.cpp
+	Events.cpp
 	specificOpenGL/OpenGLSprite.cpp
 	specificOpenGL/OpenGLShader.cpp
 	specificOpenGL/OpenGLRenderer.cpp
@@ -37,8 +40,12 @@ add_definitions(-DENGINE_OPENGL)
 include_directories(../glfw/include)
 include_directories(../Engine)
 include_directories(../stbi)
-include_directories(../glad)
+include_directories(../glad/include)
 
 target_precompile_headers(Engine PRIVATE pch.h)
 
-target_link_libraries(Engine glfw)
+target_link_libraries(Engine glfw glad stbi)
+
+file(COPY Assets DESTINATION ${PROJECT_BINARY_DIR}/Engine)
+file(COPY Assets DESTINATION ${PROJECT_BINARY_DIR}/Debug)
+file(COPY Assets DESTINATION ${PROJECT_BINARY_DIR}/Release)
