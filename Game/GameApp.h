@@ -14,6 +14,8 @@ public:
 
 	bool Status(const Entity& one);
 
+	bool InBound(int begin, int end);
+
 private:
 	Entity mBouncer{ {"Assets/Images/Bouncer.png"} };
 	Entity mBall{ {"Assets/Images/Ball.png"} };
@@ -27,6 +29,8 @@ private:
 		"Assets/Images/6Label.png", "Assets/Images/7Label.png", "Assets/Images/8Label.png", "Assets/Images/9Label.png"} };
 
 	bool mStatus{ true };
+
+	bool mPositive{ true };
 
 	int mScore{ 0 };
 

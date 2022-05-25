@@ -14,3 +14,4 @@ GameApp.h
 	adds new methods
 		-Score: a boolean function that returns true if ball makes contact with the bouncer
 		-Status: a boolean function that ends the game if ball reaches the bottom of the game window
+		-InBound: a boolean function that determines whether the bouncer is within the boundaries

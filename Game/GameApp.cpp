@@ -7,10 +7,12 @@ GameApp::GameApp()
 		switch (e.GetKeyCode())
 		{
 		case ENGINE_KEY_LEFT:
-			mBouncerSpeed = -10;
+			mPositive = false;
+			mBouncerSpeed = 5;
 			break;
 		case ENGINE_KEY_RIGHT:
-			mBouncerSpeed = 10;
+			mBouncerSpeed = 5;
+			mPositive = true;
 			break;
 		}
 	});
@@ -51,7 +53,11 @@ void GameApp::OnUpdate()
 {
 	if (mStatus) 
 	{
-		mBouncer.SetX(mBouncer.GetX() + mBouncerSpeed);	
+		for (int i = 0; i < mBouncerSpeed; i++) {
+			int newX = mBouncer.GetX() + (mPositive ? 1 : -1);
+			if (InBound(newX, newX + mBouncer.GetWidth()))
+				mBouncer.SetX(newX);
+		}
 
 		mBall.SetY(mBall.GetY() - mBallSpeed);
 
@@ -98,4 +104,9 @@ bool GameApp::Score(const Entity& one, const Entity& another)
 bool GameApp::Status(const Entity& one)
 {
 	return (one.GetY() <= 0);
+}
+
+bool GameApp::InBound(int begin, int end)
+{
+	return (begin >= 0 && end <= Engine::GameWindow::GetWindow()->GetWidth());
 }
