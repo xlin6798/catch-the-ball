@@ -3,9 +3,21 @@
 GameApp::GameApp()
 {
 	SetKeyPressedCallback([this](const Engine::KeyPressedEvent& e)
-	{
+		{
 			switch (mState)
 			{
+			case -1:
+				switch (e.GetKeyCode())
+				{
+				case ENGINE_KEY_SPACE:
+					mState = 0;
+					break;
+				case ENGINE_KEY_ENTER:
+					mState = 0;
+					break;
+				}
+				break;
+
 			case 0:
 				switch (e.GetKeyCode())
 				{
@@ -68,6 +80,12 @@ GameApp::GameApp()
 				case ENGINE_KEY_RIGHT:
 					mPositive = 1;
 					break;
+				case ENGINE_KEY_A:
+					mPositive = -1;
+					break;
+				case ENGINE_KEY_D:
+					mPositive = 1;
+					break;
 				}
 				break;
 
@@ -83,20 +101,20 @@ GameApp::GameApp()
 				}
 				break;
 			}
-	});
+		});
 
 	SetKeyReleasedCallback([this](const Engine::KeyReleasedEvent& e)
-	{
-		switch (e.GetKeyCode())
 		{
-		case ENGINE_KEY_LEFT:
-			mPositive = 0;
-			break;
-		case ENGINE_KEY_RIGHT:
-			mPositive = 0;
-			break;
-		}
-	});
+			/*switch (e.GetKeyCode())
+			{
+			case ENGINE_KEY_LEFT:
+				mPositive = 0;
+				break;
+			case ENGINE_KEY_RIGHT:
+				mPositive = 0;
+				break;
+			}*/
+		});
 
 	mLabel.SetX(50);
 	mLabel.SetY(Engine::GameWindow::GetWindow()->GetHeight() - 50);
@@ -124,12 +142,23 @@ GameApp::GameApp()
 	mHelpPoster.SetX(Engine::GameWindow::GetWindow()->GetWidth() / 2 - mHelpPoster.GetWidth() / 2);	// center
 	mHelpPoster.SetY(Engine::GameWindow::GetWindow()->GetHeight() / 2 - mHelpPoster.GetHeight() / 2);	// center
 
+	mStartPoster.SetX(Engine::GameWindow::GetWindow()->GetWidth() / 2 - mStartPoster.GetWidth() / 2);	// center
+	mStartPoster.SetY(Engine::GameWindow::GetWindow()->GetHeight() / 2 - mStartPoster.GetHeight() / 2);	// center
 }
 
 void GameApp::OnUpdate()
 {
 	switch (mState)
 	{
+	case -1:
+		mStartPoster.Draw();
+
+		mStart++;
+
+		if(mStart % 15 == 0)
+			mStartPoster.SetActiveImage(std::abs(mStartPoster.GetActiveImage()-1));
+
+		break;
 	case 0:
 		mGameLabel.Draw();
 		mButtons.SetActiveImage(mButton == 0 ? 1 : 0);
@@ -168,7 +197,7 @@ void GameApp::OnUpdate()
 
 		if (Status(mBall))
 			mState = 2;
-		
+
 		mBouncer.Draw();
 		mBall.Draw();
 		mLabel.Draw();
@@ -187,7 +216,7 @@ void GameApp::OnUpdate()
 			mState = 0;
 
 		break;
-	
+
 	case 3:
 		mHelpPoster.Draw();
 		break;

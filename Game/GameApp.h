@@ -23,9 +23,11 @@ private:
 	Entity mGameOverLabel{ {"Assets/Images/GameOverLabel.png"} };
 	Entity mGameLabel{ {"Assets/Images/GameLabel.png"} };
 	Entity mHelpPoster{ {"Assets/Images/HelpPoster.png"} };
-	Entity mButtons{ {"Assets/Images/StartButton.png", "Assets/Images/StartButtonActive.png", 
-		"Assets/Images/HelpButton.png", "Assets/Images/HelpButtonActive.png", 
-		"Assets/Images/ExitButton.png", "Assets/Images/ExitButtonActive.png"}};
+	Entity mStartPoster{ {"Assets/Images/StartPoster01.png", "Assets/Images/StartPoster02.png"} };
+
+	Entity mButtons{ {"Assets/Images/StartButton.png", "Assets/Images/StartButtonActive.png",
+		"Assets/Images/HelpButton.png", "Assets/Images/HelpButtonActive.png",
+		"Assets/Images/ExitButton.png", "Assets/Images/ExitButtonActive.png"} };
 
 	Entity mOnes{ {"Assets/Images/0Label.png", "Assets/Images/1Label.png", "Assets/Images/2Label.png",
 		"Assets/Images/3Label.png", "Assets/Images/4Label.png", "Assets/Images/5Label.png",
@@ -34,13 +36,15 @@ private:
 		"Assets/Images/3Label.png", "Assets/Images/4Label.png", "Assets/Images/5Label.png",
 		"Assets/Images/6Label.png", "Assets/Images/7Label.png", "Assets/Images/8Label.png", "Assets/Images/9Label.png"} };
 
-	int mState{ 0 };	// 0: game menu		1: in game		2: game over	3: help menu	4: exit	
-	
+	int mState{ -1 };	// -1: welcome page		0: game menu	1: in game	2: game over  3: help menu	4: exit	
+
 	int mButton{ 0 };	// 0: start		1: help			2: exit
 
 	int mPositive{ 0 };
 
 	int mScore{ 0 };
+
+	int mStart{ 0 };
 
 	int mDelay{ 0 };
 
