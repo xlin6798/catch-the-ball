@@ -11,7 +11,6 @@ public:
 	int GetX() const;
 	int GetY() const;
 	int GetZ() const;
-	bool GetSolid() const;
 	int GetActiveImage() const;
 	int GetWidth() const;
 	int GetHeight() const;
@@ -19,7 +18,6 @@ public:
 	void SetX(int newX);
 	void SetY(int newY);
 	void SetZ(int newZ);
-	void SetSolid(bool newSolid);
 	void SetActiveImage(int newActiveImage);
 
 	void Draw();

@@ -7,64 +7,95 @@ GameApp::GameApp()
 		switch (e.GetKeyCode())
 		{
 		case ENGINE_KEY_LEFT:
-			mHorizontalSpeed = -2;
-			mHero.SetActiveImage(0);
+			mBouncerSpeed = -10;
 			break;
 		case ENGINE_KEY_RIGHT:
-			mHorizontalSpeed = 2;
-			mHero.SetActiveImage(1);
+			mBouncerSpeed = 10;
 			break;
 		}
 	});
 
 	SetKeyReleasedCallback([this](const Engine::KeyReleasedEvent& e)
 	{
-		mHorizontalSpeed = 0;
+		switch (e.GetKeyCode())
+		{
+		case ENGINE_KEY_LEFT:
+			mBouncerSpeed = 0;
+			break;
+		case ENGINE_KEY_RIGHT:
+			mBouncerSpeed = 0;
+			break;
+		}
 	});
 
-	mDangers[0].SetX(300);
-	mDangers[0].SetY(300);
+	mLabel.SetX(50);
+	mLabel.SetY(Engine::GameWindow::GetWindow()->GetHeight() - 50);
+
+	mTens.SetX(130);
+	mTens.SetY(Engine::GameWindow::GetWindow()->GetHeight() - 50);
+
+	mOnes.SetX(150);
+	mOnes.SetY(Engine::GameWindow::GetWindow()->GetHeight() - 50);
+
+	mBall.SetX(rand() % (Engine::GameWindow::GetWindow()->GetWidth() - 100) + 50);		//50 to width - 100
+	mBall.SetY(Engine::GameWindow::GetWindow()->GetHeight() + 200);
+
+	mBouncer.SetX(Engine::GameWindow::GetWindow()->GetWidth() / 2 - mBouncer.GetWidth() / 2);		// center
+	mBouncer.SetY(100);
+
+	mGameOverLabel.SetX(Engine::GameWindow::GetWindow()->GetWidth() / 2 - mGameOverLabel.GetWidth() / 2);	// center
+	mGameOverLabel.SetY(Engine::GameWindow::GetWindow()->GetHeight() / 2 - mGameOverLabel.GetHeight() / 2);	// center
 }
 
 void GameApp::OnUpdate()
 {
-	mHero.SetX(mHero.GetX() + mHorizontalSpeed);
+	if (mStatus) 
+	{
+		mBouncer.SetX(mBouncer.GetX() + mBouncerSpeed);	
 
-	if ((mDangers[0].GetY() < 0) || 
-		(mDangers[0].GetY() > Engine::GameWindow::GetWindow()->GetHeight() - mDangers[0].GetHeight()))
-		mEnemyVSpeed *= -1;
+		mBall.SetY(mBall.GetY() - mBallSpeed);
 
-	mDangers[0].SetY(mDangers[0].GetY() + mEnemyVSpeed);
+		if (Score(mBall, mBouncer)) {
+			mBall.SetX(rand() % (Engine::GameWindow::GetWindow()->GetWidth() - 100) + 50);
+			mBall.SetY(Engine::GameWindow::GetWindow()->GetHeight() + 200);
+			mBallSpeed++;
+			mScore++;
+			mOnes.SetActiveImage(mScore % 10);
+			mTens.SetActiveImage(mScore / 10);
+		}
 
-	if (Collide(mHero, mDangers[0]))
-		exit(0);
-
-	mDangers[0].Draw();
-	mHero.Draw();
+		if (Status(mBall))
+			mStatus = false;
+		
+		mBouncer.Draw();
+		mBall.Draw();
+	}
+	else
+	{
+		mGameOverLabel.Draw();
+	}
+	mLabel.Draw();
+	mOnes.Draw();
+	mTens.Draw();
 }
 
 
-bool GameApp::Collide(const Entity& one, const Entity& another)
+bool GameApp::Score(const Entity& one, const Entity& another)
 {
 	int oneLeft{ one.GetX() };
 	int oneRight{ one.GetX() + one.GetWidth() };
 	int anotherLeft{ another.GetX() };
 	int anotherRight{ another.GetX() + another.GetWidth() };
 
-	int oneBottom{ one.GetX() };
+	int oneBottom{ one.GetY() };
 	int oneTop{ one.GetY() + one.GetHeight() };
 	int anotherBottom{ another.GetY() };
 	int anotherTop{ another.GetY() + another.GetHeight() };
 
-	bool collideX{ false };
-	if ((oneLeft <= anotherLeft && anotherLeft <= oneRight) ||
-		(anotherLeft <= oneLeft && oneLeft <= anotherRight))
-		collideX = true;
+	return ((oneRight >= anotherLeft && oneLeft <= anotherRight) && (oneBottom <= anotherTop && oneTop >= anotherBottom));
+}
 
-	bool collideY{ false };
-	if ((oneBottom <= anotherBottom && anotherBottom <= oneTop) ||
-		(anotherBottom <= oneBottom && oneBottom <= anotherTop))
-		collideY = true;
-
-	return collideX && collideY;
+bool GameApp::Status(const Entity& one)
+{
+	return (one.GetY() <= 0);
 }

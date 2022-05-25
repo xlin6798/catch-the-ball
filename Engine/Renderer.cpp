@@ -15,12 +15,6 @@ namespace Engine
 	{
 		assert(mInstance != nullptr);
 
-		/*int winWidth{ GameWindow::GetWindow()->GetWidth() };
-		int winHeight{ GameWindow::GetWindow()->GetHeight() };
-
-		mInstance->mShader.SetUniform2Ints("windowSize", winWidth, winHeight);
-		mInstance->mShader.SetUniform3Ints("spriteCoord", xPos, yPos, zPos);*/
-
 		mInstance->mImplementation->Draw(picture, xPos, yPos, zPos, mInstance->mShader);
 	}
 

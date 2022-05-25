@@ -17,7 +17,7 @@ namespace Engine
 
 		GameWindow::Init();
 
-		GameWindow::GetWindow()->CreateWindow(1000, 800, "game window");
+		GameWindow::GetWindow()->CreateWindow(1000, 800, "Game Window - Ball Collector");
 
 		Renderer::Init();
 	}

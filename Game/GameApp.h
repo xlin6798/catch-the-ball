@@ -10,12 +10,27 @@ public:
 
 	virtual void OnUpdate() override;
 
-	bool Collide(const Entity& one, const Entity& another);
+	bool Score(const Entity& one, const Entity& another);
+
+	bool Status(const Entity& one);
 
 private:
-	Entity mHero{ {"Assets/Images/RightHero.png", "Assets/Images/LeftHero.png"} };
-	std::vector<Entity> mDangers{ { {"Assets/Images/Danger.png"}} };
-	int mEnemyVSpeed{ 3 };
+	Entity mBouncer{ {"Assets/Images/Bouncer.png"} };
+	Entity mBall{ {"Assets/Images/Ball.png"} };
+	Entity mLabel{ {"Assets/Images/ScoreLabel.png"} };
+	Entity mGameOverLabel{ {"Assets/Images/GameOverLabel.png"} };
+	Entity mOnes{ {"Assets/Images/0Label.png", "Assets/Images/1Label.png", "Assets/Images/2Label.png",
+		"Assets/Images/3Label.png", "Assets/Images/4Label.png", "Assets/Images/5Label.png",
+		"Assets/Images/6Label.png", "Assets/Images/7Label.png", "Assets/Images/8Label.png", "Assets/Images/9Label.png"} };
+	Entity mTens{ {"Assets/Images/0Label.png", "Assets/Images/1Label.png", "Assets/Images/2Label.png",
+		"Assets/Images/3Label.png", "Assets/Images/4Label.png", "Assets/Images/5Label.png",
+		"Assets/Images/6Label.png", "Assets/Images/7Label.png", "Assets/Images/8Label.png", "Assets/Images/9Label.png"} };
 
-	int mHorizontalSpeed{ 0 };	// speed measured in pixels per frame (60 frames per second)
+	bool mStatus{ true };
+
+	int mScore{ 0 };
+
+	int mBouncerSpeed{ 0 };	// speed measured in pixels per frame (60 frames per second)
+
+	int mBallSpeed{ 5 };	// speed measured in pixels per frame (60 frames per second)
 };

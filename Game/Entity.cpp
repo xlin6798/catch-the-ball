@@ -21,11 +21,6 @@ int Entity::GetZ() const
 	return mZPos;
 }
 
-bool Entity::GetSolid() const
-{
-	return mSolid;
-}
-
 int Entity::GetActiveImage() const
 {
 	return mActiveImage;
@@ -54,11 +49,6 @@ void Entity::SetY(int newY)
 void Entity::SetZ(int newZ)
 {
 	mZPos = newZ;
-}
-
-void Entity::SetSolid(bool newSolid)
-{
-	mSolid = newSolid;
 }
 
 void Entity::SetActiveImage(int newActiveImage)

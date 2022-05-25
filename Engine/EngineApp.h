@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "Events.h"
 
-#define ENGINE_FRAMERATE 60
+#define ENGINE_FRAMERATE 30
 
 namespace Engine
 {
