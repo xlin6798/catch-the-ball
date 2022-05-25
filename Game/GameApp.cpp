@@ -4,17 +4,85 @@ GameApp::GameApp()
 {
 	SetKeyPressedCallback([this](const Engine::KeyPressedEvent& e)
 	{
-		switch (e.GetKeyCode())
-		{
-		case ENGINE_KEY_LEFT:
-			mPositive = false;
-			mBouncerSpeed = 5;
-			break;
-		case ENGINE_KEY_RIGHT:
-			mBouncerSpeed = 5;
-			mPositive = true;
-			break;
-		}
+			switch (mState)
+			{
+			case 0:
+				switch (e.GetKeyCode())
+				{
+				case ENGINE_KEY_ENTER:
+					switch (mButton)
+					{
+					case 0:
+						mState = 1;
+						break;
+					case 1:
+						mState = 3;
+						break;
+					case 2:
+						mState = 4;
+						break;
+					}
+					break;
+
+				case ENGINE_KEY_SPACE:
+					switch (mButton)
+					{
+					case 0:
+						mState = 1;
+						break;
+					case 1:
+						mState = 3;
+						break;
+					case 2:
+						mState = 4;
+						break;
+					}
+					break;
+
+				case ENGINE_KEY_UP:
+					if (mButton >= 1)
+						mButton--;
+					break;
+				case ENGINE_KEY_DOWN:
+					if (mButton <= 1)
+						mButton++;
+					break;
+
+				case ENGINE_KEY_W:
+					if (mButton >= 1)
+						mButton--;
+					break;
+				case ENGINE_KEY_S:
+					if (mButton <= 1)
+						mButton++;
+					break;
+				}
+				break;
+
+			case 1:
+				switch (e.GetKeyCode())
+				{
+				case ENGINE_KEY_LEFT:
+					mPositive = -1;
+					break;
+				case ENGINE_KEY_RIGHT:
+					mPositive = 1;
+					break;
+				}
+				break;
+
+			case 3:
+				switch (e.GetKeyCode())
+				{
+				case ENGINE_KEY_SPACE:
+					mState = 0;
+					break;
+				case ENGINE_KEY_ENTER:
+					mState = 0;
+					break;
+				}
+				break;
+			}
 	});
 
 	SetKeyReleasedCallback([this](const Engine::KeyReleasedEvent& e)
@@ -22,10 +90,10 @@ GameApp::GameApp()
 		switch (e.GetKeyCode())
 		{
 		case ENGINE_KEY_LEFT:
-			mBouncerSpeed = 0;
+			mPositive = 0;
 			break;
 		case ENGINE_KEY_RIGHT:
-			mBouncerSpeed = 0;
+			mPositive = 0;
 			break;
 		}
 	});
@@ -47,14 +115,40 @@ GameApp::GameApp()
 
 	mGameOverLabel.SetX(Engine::GameWindow::GetWindow()->GetWidth() / 2 - mGameOverLabel.GetWidth() / 2);	// center
 	mGameOverLabel.SetY(Engine::GameWindow::GetWindow()->GetHeight() / 2 - mGameOverLabel.GetHeight() / 2);	// center
+
+	mGameLabel.SetX(Engine::GameWindow::GetWindow()->GetWidth() / 2 - mGameLabel.GetWidth() / 2);	// center
+	mGameLabel.SetY(Engine::GameWindow::GetWindow()->GetHeight() / 2 - mGameLabel.GetHeight() / 2 + 200);	// center + 200 pixels up
+
+	mButtons.SetX(Engine::GameWindow::GetWindow()->GetWidth() / 2 - mButtons.GetWidth() / 2);	// center
+
+	mHelpPoster.SetX(Engine::GameWindow::GetWindow()->GetWidth() / 2 - mHelpPoster.GetWidth() / 2);	// center
+	mHelpPoster.SetY(Engine::GameWindow::GetWindow()->GetHeight() / 2 - mHelpPoster.GetHeight() / 2);	// center
+
 }
 
 void GameApp::OnUpdate()
 {
-	if (mStatus) 
+	switch (mState)
 	{
+	case 0:
+		mGameLabel.Draw();
+		mButtons.SetActiveImage(mButton == 0 ? 1 : 0);
+		mButtons.SetY(Engine::GameWindow::GetWindow()->GetHeight() / 2 - mButtons.GetHeight() / 2);	// center
+		mButtons.Draw();
+
+		mButtons.SetActiveImage(mButton == 1 ? 3 : 2);
+		mButtons.SetY(Engine::GameWindow::GetWindow()->GetHeight() / 2 - mButtons.GetHeight() / 2 - 120);	// center - 120 pixels down
+		mButtons.Draw();
+
+		mButtons.SetActiveImage(mButton == 2 ? 5 : 4);
+		mButtons.SetY(Engine::GameWindow::GetWindow()->GetHeight() / 2 - mButtons.GetHeight() / 2 - 240);	// center - 240 pixels= down
+		mButtons.Draw();
+
+		break;
+
+	case 1:
 		for (int i = 0; i < mBouncerSpeed; i++) {
-			int newX = mBouncer.GetX() + (mPositive ? 1 : -1);
+			int newX = mBouncer.GetX() + mPositive;
 			if (InBound(newX, newX + mBouncer.GetWidth()))
 				mBouncer.SetX(newX);
 		}
@@ -68,21 +162,40 @@ void GameApp::OnUpdate()
 			mScore++;
 			mOnes.SetActiveImage(mScore % 10);
 			mTens.SetActiveImage(mScore / 10);
+			if (mScore % 3 == 0)
+				mBouncerSpeed++;
 		}
 
 		if (Status(mBall))
-			mStatus = false;
+			mState = 2;
 		
 		mBouncer.Draw();
 		mBall.Draw();
-	}
-	else
-	{
+		mLabel.Draw();
+		mOnes.Draw();
+		mTens.Draw();
+
+		break;
+
+	case 2:
+		mLabel.Draw();
+		mOnes.Draw();
+		mTens.Draw();
 		mGameOverLabel.Draw();
+		mDelay++;
+		if (mDelay >= 30 * 4)	// frames * seconds = time delayed (in seconds)
+			mState = 0;
+
+		break;
+	
+	case 3:
+		mHelpPoster.Draw();
+		break;
+
+	case 4:
+		exit(0);
+		break;
 	}
-	mLabel.Draw();
-	mOnes.Draw();
-	mTens.Draw();
 }
 
 

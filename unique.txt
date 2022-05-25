@@ -1,16 +1,33 @@
-﻿Creates a game that collects balls for more points
+﻿Game Name:
+
+Catch the Ball
+
+Creates a game that collects balls for more points
+
+
+Changes:
+
+Adds a Game Menu that allows user to select from START, HELP, or EXIT 
+	(Uses UP and Down arrow keys and ENTER/SPACE to select)
 
 GameApp.h
 	adds new sprites
+		-Buttons: a vector of buttons that will serve as the buttons for the game menu, using ActiveImage to display the target PNG
 		-Bouncer: a rectangle that collects the ball
 		-Ball: a circle that drops at random place with increasing speed
 		-Labels: a few text label
 		-Score Labels: add two vector of labels for displaying count of the score
+		-Help Poster: a poster created in illustrator to provide user the instructions to play the game
+
 	adds new variables
-		-mStatus： a boolean that determines whether game is still valid
+		-mState： an int that stores the current state the program is in
+		-mButton: an int that stores the current state the button is in
 		-mScore: an int that keep count of score
-		-mBouncerSpeed: speed of which the bouncer can move at
-		-mBallSpeed: speed of which the ball drops at
+		-mDelay: an int that is use to delay the program to redirect to the original game menu after the game is over
+		-mBouncerSpeed: an int that stores the speed of which the bouncer can move at
+		-mPostive: an int that stores the the direction of which the bouncer will move in
+		-mBallSpeed: an int that stores the speed of which the ball drops at
+
 	adds new methods
 		-Score: a boolean function that returns true if ball makes contact with the bouncer
 		-Status: a boolean function that ends the game if ball reaches the bottom of the game window
