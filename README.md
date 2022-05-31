@@ -2,7 +2,7 @@
 
 Catch the Ball is a simple game engine created with C++ as a course project for CSCI 39541 Hunter College.
 
-![Demo](https://user-images.githubusercontent.com/41911954/171300102-3e8874b6-4bf8-4dc2-a5fa-a33c8ab8a4bf.mp4)
+![Demo](Demo.gif)
 
 ## Built with
 
