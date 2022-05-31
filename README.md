@@ -4,10 +4,10 @@ Catch the Ball is a simple game engine created with C++ as a course project for 
 
 ## Built with
 
-* [VS Community]([https://nextjs.org/](https://visualstudio.microsoft.com/vs/community/))
-* [GLFW][(https://reactjs.org/](https://www.glfw.org/))
-* [OpenGL]([https://vuejs.org/](https://www.opengl.org/))
-* [STB]([https://angular.io/](https://github.com/nothings/stb))
+* [VS Community](https://visualstudio.microsoft.com/vs/community/)
+* [GLFW](https://www.glfw.org/)
+* [OpenGL](https://www.opengl.org/)
+* [STB](https://github.com/nothings/stb)
 
 ## Installation
 
