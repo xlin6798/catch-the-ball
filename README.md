@@ -57,4 +57,8 @@ Please ensure that your contributions adhere to the coding standards and follow 
 
 ## License
 
-This project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/).
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Contact
+
+If you have any questions or inquiries about this project, you can reach out to the project maintainer at [kevinlin11426@gmail.com](mailto:kevinlin11426@gmail.com).
